@@ -48,6 +48,7 @@ public class XBlocksDefense {
         aller = new Wall("chelour-wall"){{
             requirements(Category.defense, with(Items.copper, 65));
             health = 80;
+            size = 2;
             researchCostMultiplier = 0.1f;
             envDisabled |= Env.scorching;
         }};
