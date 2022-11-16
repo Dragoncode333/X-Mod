@@ -46,7 +46,7 @@ public class XBlocksDefense {
 
     public static void load(){
         aller = new Wall("Gatling") {{
-            requirements(Category.effect, with(Items.silicon, 150, Items.oxide, 40, Items.thorium, 60));
+            requirements(Category.defense, with(Items.silicon, 150, Items.oxide, 40, Items.thorium, 60));
 
 			size = 2;
 			scaledHealth = 160;
