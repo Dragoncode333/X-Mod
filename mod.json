@@ -1,0 +1,12 @@
+{
+  "name": "xmod",
+  "displayName": "XMod",
+  "author": "BouldoMainBTW",
+  "description": "HUH !",
+  "subtitle": "Hammond !",
+  "version": "1.0",
+  "main": "xmod.XMod",
+  "minGameVersion": "136",
+  "dependencies": [],
+  "hidden": false
+}
