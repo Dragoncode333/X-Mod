@@ -45,11 +45,11 @@ public class XBlocksDefense {
     aller;
 
     public static void load(){
-        aller = new Wall("Gatling") {{
-            requirements(Category.defense, with(Items.silicon, 150, Items.oxide, 40, Items.thorium, 60));
-
-			size = 2;
-			scaledHealth = 160;
+        aller = new Wall("chelour-wall"){{
+            requirements(Category.defense, with(Items.copper, 65));
+            health = 80;
+            researchCostMultiplier = 0.1f;
+            envDisabled |= Env.scorching;
         }};
     }
 }
