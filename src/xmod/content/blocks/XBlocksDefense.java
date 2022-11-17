@@ -42,7 +42,7 @@ import static mindustry.type.ItemStack.*;
 public class XBlocksDefense {
     public static Block
     //turret
-    aller,super;
+    aller, manger;
 
     public static void load(){
         aller = new Wall("chelour-wall"){{
@@ -53,7 +53,7 @@ public class XBlocksDefense {
             envDisabled |= Env.scorching;
         }};
         
-        super = new PayloadMassDriver("super"){{
+        manger = new PayloadMassDriver("tourelle-block"){{
             requirements(Category.units, with(Items.tungsten, 120, Items.silicon, 120, Items.graphite, 50));
             regionSuffix = "-dark";
             size = 3;
