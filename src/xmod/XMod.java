@@ -13,7 +13,7 @@ import mindustry.net.*;
 import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.blocks.*;
-import xmod.content.blocks.XBlocksDefense;
+import xmod.content.*;
 
 import static java.lang.Float.*;
 import static mindustry.Vars.*;
