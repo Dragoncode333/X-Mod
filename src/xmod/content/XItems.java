@@ -23,6 +23,5 @@ public class XItems {
             hardness = 1;
             cost = 0.7f;
         }};
-
     }
 }
