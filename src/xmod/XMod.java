@@ -13,7 +13,9 @@ import mindustry.net.*;
 import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.blocks.*;
-import xmod.content.*;
+import xmod.content.XItems;
+import xmod.content.XLiquids;
+import xmod.content.XBlocks;
 
 import static java.lang.Float.*;
 import static mindustry.Vars.*;
