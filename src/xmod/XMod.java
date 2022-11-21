@@ -13,9 +13,11 @@ import mindustry.net.*;
 import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.blocks.*;
-import xmod.content.XItems;
-import xmod.content.XLiquids;
-import xmod.content.XBlocks;
+import xmod.content.*;
+import xmod.graphics.*;
+import xmod.ui.*;
+import xmod.util.*;
+import xmod.world.blocks.campaign.*;
 
 import static java.lang.Float.*;
 import static mindustry.Vars.*;
@@ -25,13 +27,10 @@ public class XMod extends Mod{
     public XMod(){
         
     };
-
-    @Override
-	public void loadContent() {
-        	XItems.load();
+	@Override
+    public void loadContent(){
+                XItems.load();
         	XLiquids.load();
         	XBlocks.load();
-
-	}
-
+    }
 }
