@@ -13,7 +13,7 @@ import mindustry.net.*;
 import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.blocks.*;
-import xmod.content.blocks.XBlocksDefense;
+import xmod.content.*;
 
 import static java.lang.Float.*;
 import static mindustry.Vars.*;
@@ -26,8 +26,9 @@ public class XMod extends Mod{
 
     @Override
 	public void loadContent() {
-        XBlocksDefense.load();
-
+        XItems.load();
+        XLiquids.load();
+        XBlocks.load();
+        
 	}
-
 }
