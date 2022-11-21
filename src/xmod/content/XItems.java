@@ -7,12 +7,16 @@ import mindustry.type.*;
 public class XItems {
     public static Item
 
-    iron, emptyRocket, flydradiumRocket;
+    iron, tenmm, emptyRocket, flydradiumRocket;
 
     public static void load(){
 
         iron = new Item("iron", Color.valueOf("c5c5c5")){{
             hardness = 1;
+        }};
+
+        tenmm = new Item("10mm", Color.valueOf("ffad00")){{
+            radioactivity = 0f;
         }};
 
         emptyRocket = new Item("empty-rocket", Color.valueOf("f9a3c7")){{

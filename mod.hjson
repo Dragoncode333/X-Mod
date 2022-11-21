@@ -1,23 +1,23 @@
-#the mod name as displayed in-game
-displayName: "XMod"
-
 #the internal name of your mod
 name: "xmod"
 
+#the mod name as displayed in-game
+displayName: "[cyan[]]JeSaisPasMoi:([[cyan]]"
+
+#the mod description as seen in the mod dialog
+description: "By a [orange[]]Hammond[[orange]] player."
+
 #your name
-author: "BouldoMainBTW"
+author: "[green[]]HammondMainBTW[[green]]"
 
 #the fully qualified main class of the mod
 main: "xmod.XMod"
 
-#the mod description as seen in the mod dialog
-description: "HUH !"
-
 #the mod version
-version: 1.0
+version: 0.2 PRE-ALPHA
 
 #the minimum game build required to run this mod
-minGameVersion: 136
+minGameVersion: 137
 
 #this is a java mod
 java: true

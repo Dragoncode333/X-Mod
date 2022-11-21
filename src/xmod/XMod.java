@@ -29,6 +29,5 @@ public class XMod extends Mod{
         XItems.load();
         XLiquids.load();
         XBlocks.load();
-        
 	}
 }
