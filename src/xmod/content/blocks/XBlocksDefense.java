@@ -39,7 +39,7 @@ import mindustry.content.*;
 import static mindustry.Vars.*;
 import static mindustry.type.ItemStack.*;
 
-public class XBlocksDefense {
+public class XBlocks {
     public static Block
     //turret
     aller, manger;
