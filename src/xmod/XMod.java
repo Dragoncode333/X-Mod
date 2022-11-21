@@ -26,7 +26,9 @@ public class XMod extends Mod{
 
     @Override
 	public void loadContent() {
-        XBlocksDefense.load();
+        	XItems.load();
+        	XLiquids.load();
+        	XBlocks.load();
 
 	}
 
