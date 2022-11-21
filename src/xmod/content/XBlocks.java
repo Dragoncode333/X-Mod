@@ -1,4 +1,4 @@
-package xmod.content.blocks;
+package xmod.content;
 import arc.graphics.*;
 import arc.math.*;
 import arc.struct.*;
@@ -39,10 +39,10 @@ import mindustry.content.*;
 import static mindustry.Vars.*;
 import static mindustry.type.ItemStack.*;
 
-public class XBlocksDefense {
+public class XBlocks {
     public static Block
     //turret
-    aller, manger;
+    aller;
 
     public static void load(){
         aller = new Wall("chelour-wall"){{
@@ -51,18 +51,6 @@ public class XBlocksDefense {
             size = 2;
             researchCostMultiplier = 0.1f;
             envDisabled |= Env.scorching;
-        }};
-        
-        manger = new PayloadMassDriver("tourelle-block"){{
-            requirements(Category.units, with(Items.tungsten, 120, Items.silicon, 120, Items.graphite, 50));
-            regionSuffix = "-dark";
-            size = 3;
-            reload = 130f;
-            chargeTime = 90f;
-            range = 700f;
-            maxPayloadSize = 2.5f;
-            fogRadius = 5;
-            consumePower(0.5f);
         }};
     }
 }
