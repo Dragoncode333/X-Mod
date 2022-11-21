@@ -4,7 +4,7 @@ import arc.graphics.*;
 import arc.struct.*;
 import mindustry.type.*;
 
-public class Items{
+public class Item{
     public static Item
     flydradiumRocket;
     
