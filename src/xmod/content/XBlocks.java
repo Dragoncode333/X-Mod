@@ -309,28 +309,100 @@ public class XBlocks {
         }};
         
         turret = new PayloadAmmoTurret("turret"){{
-        requirements(Category.turret, with(Items.silicon, 450, Items.graphite, 400, Items.copper, 500, Items.lead, 300));
-        ammo(
-                Blocks.duo,  new BasicBulletType(2.5f, 9){{
-                    width = 7f;
-                    height = 9f;
-                    lifetime = 60f;
-                    ammoMultiplier = 2;
-                    shootEffect = Fx.massiveExplosion;
-                }},
-        );
-            reload = 20f;
-            range = 110;
-            shootCone = 15f;
-            ammoUseEffect = Fx.casing1;
-            health = 250;
-            inaccuracy = 2f;
-            rotateSpeed = 10f;
-            coolant = consumeCoolant(0.1f);
-            researchCostMultiplier = 0.05f;
+            requirements(Category.turret, with(Items.tungsten, 150, Items.silicon, 200, Items.oxide, 40, Items.beryllium, 400));
+            size = 7;
+            outlineColor = Pal.darkOutline;
+            shootWarmupSpeed = 0.04f;
+            shootY = 0;
+            minWarmup = 0.99f;
+            coolant = consume(new ConsumeLiquid(Liquids.water, 15f / 60f));
+            coolantMultiplier = 6f;
+            shake = 2f;
+            rotateSpeed = 2.5f;
+            reload = 45f;
+            recoil = 2f;
 
-            limitRange();
+            ammo(
+                    Blocks.shieldedWall, new BasicBulletType(11f, 500){{
+                        lifetime = 30f;
+                        range = 330f;
+                        width = 12f;
+                        hitSize = 7f;
+                        height = 20f;
+                        smokeEffect = Fx.shootBigSmoke;
+                        ammoMultiplier = 1;
+                        pierceCap = 7;
+                        pierce = true;
+                        pierceBuilding = true;
+                        hitColor = backColor = trailColor = Color.valueOf("#89769a");
+                        frontColor = Color.white;
+                        trailWidth = 2.1f;
+                        trailLength = 10;
+                        hitEffect = despawnEffect = Fx.hitBulletColor;
+                        buildingDamageMultiplier = 0.3f;
+                    }},
+                    Blocks.reinforcedSurgeWallLarge, new BasicBulletType(13f, 750){{
+                        lifetime = 35f;
+                        range = 455;
+                        width = 12f;
+                        hitSize = 7f;
+                        height = 20f;
+                        smokeEffect = Fx.shootBigSmoke;
+                        ammoMultiplier = 1;
+                        pierceCap = 7;
+                        pierce = true;
+                        pierceBuilding = true;
+                        hitColor = backColor = trailColor = Pal.accent;
+                        frontColor = Color.white;
+                        trailWidth = 2.1f;
+                        trailLength = 10;
+                        hitEffect = despawnEffect = Fx.hitBulletColor;
+                        buildingDamageMultiplier = 0.3f;
+                        fragBullets = 4;
+                        fragBullet = new LightningBulletType(){{
+                            damage = 30;
+                            collidesAir = false;
+                            ammoMultiplier = 1f;
+                            lightningColor = Pal.accent;
+                            lightningLength = 6;
+                            lightningLengthRand = 3;
+                        }};
+                    }}
+            );
+
+            drawer = new DrawTurret("reinforced-"){{
+                parts.addAll(
+                        new RegionPart("-body"){{
+                            layerOffset = 0f;
+                            outlineLayerOffset = -0.3f;
+                            heatProgress = PartProgress.warmup;
+                            heatColor = Pal.berylShot.cpy().a(0.25f);
+                        }},
+
+                        new RegionPart("-wing"){{
+                            progress = heatProgress = PartProgress.warmup.curve(Interp.slowFast).curve(Interp.bounce);
+                            heatColor = Pal.berylShot.cpy().a(0.40f);
+                            layerOffset = -0.1f;
+                            moveX = 10f * 0.25f;
+                            moveY = -10f * 0.25f;
+                            turretShading = true;
+                            mirror = true;
+                            outlineLayerOffset = -0.2f;
+                        }},
+                        new RegionPart("-barrel"){{
+                            layerOffset = -0.2f;
+                            progress = PartProgress.warmup.curve(Interp.circleIn).curve(Interp.bounce);
+                            moveX = 20f * 0.25f;
+                            moveY = 20f * 0.25f;
+                            turretShading = true;
+                            mirror = true;
+                            outlineLayerOffset = -0.1f;
+                            heatColor = Pal.turretHeat.cpy();
+                            heatLayerOffset = -0.2f;
+                            moves.add(new PartMove(PartProgress.recoil.sustain(1f, 0.1f, 0.1f), 0f, -4f, 0f));
+                        }}
+                );
+            }};
         }};
-        
     }
 }
