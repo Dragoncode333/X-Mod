@@ -307,5 +307,10 @@ public class XBlocks {
             coolant = consume(new ConsumeLiquid(XLiquids.coolantLiquid, 60f / 30f));
             limitRange();
         }};
+        
+        turret = new PayloadAmmoTurret("turret"){{
+        requirements(Category.turret, with(Items.silicon, 450, Items.graphite, 400, Items.copper, 500, Items.lead, 300));
+        ammo()
+        }};
     }
 }
