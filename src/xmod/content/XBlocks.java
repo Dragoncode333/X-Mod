@@ -311,7 +311,7 @@ public class XBlocks {
         turret = new PayloadAmmoTurret("turret"){{
         requirements(Category.turret, with(Items.silicon, 450, Items.graphite, 400, Items.copper, 500, Items.lead, 300));
         ammo(
-                blocks.duo,  new BasicBulletType(2.5f, 9){{
+                Blocks.duo,  new BasicBulletType(2.5f, 9){{
                     width = 7f;
                     height = 9f;
                     lifetime = 60f;
