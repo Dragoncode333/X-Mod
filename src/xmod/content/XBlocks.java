@@ -149,7 +149,9 @@ public class XBlocks {
                     trailEffect = Fx.none;
                     splashDamage = 155f;
                     splashDamageRadius = 25f;
-                    hitEffect = despawnEffect = new WaveEffect(){{
+                    hitEffect = despawnEffect = new MultiEffect(
+                    Fx.hitBulletBig,
+                    new WaveEffect(){{
                         sizeFrom = 0f;
                         sizeTo = 25f;
                         strokeFrom = 8.5f;
@@ -157,7 +159,8 @@ public class XBlocks {
                         lifetime = 15f;
                         colorFrom = Color.valueOf("A9D8FFFF");
                         colorTo = Color.valueOf("66B1FFFF");
-                    }};
+                    }}
+                   );
                 }}
             );
             reload = 5.5f;
