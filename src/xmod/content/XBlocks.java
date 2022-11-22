@@ -42,7 +42,7 @@ import static mindustry.type.ItemStack.*;
 public class XBlocks {
     public static Block
     //turret
-    aller, simple, doubleGatling, rocketCrafter, rocketLauncher;
+    aller, simple, doubleGatling, rocketCrafter, rocketLauncher, turret;
 
     public static void load(){
 
@@ -310,7 +310,27 @@ public class XBlocks {
         
         turret = new PayloadAmmoTurret("turret"){{
         requirements(Category.turret, with(Items.silicon, 450, Items.graphite, 400, Items.copper, 500, Items.lead, 300));
-        ammo()
+        ammo(
+                blocks.duo,  new BasicBulletType(2.5f, 9){{
+                    width = 7f;
+                    height = 9f;
+                    lifetime = 60f;
+                    ammoMultiplier = 2;
+                    shootEffect = Fx.massiveExplosion;
+                }},
+        );
+            reload = 20f;
+            range = 110;
+            shootCone = 15f;
+            ammoUseEffect = Fx.casing1;
+            health = 250;
+            inaccuracy = 2f;
+            rotateSpeed = 10f;
+            coolant = consumeCoolant(0.1f);
+            researchCostMultiplier = 0.05f;
+
+            limitRange();
         }};
+        
     }
 }
