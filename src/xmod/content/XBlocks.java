@@ -321,6 +321,7 @@ public class XBlocks {
             rotateSpeed = 2.5f;
             reload = 45f;
             recoil = 2f;
+            envEnabled |= Env.scorching;
 
             ammo(
                     Blocks.shieldedWall, new BasicBulletType(11f, 500){{
