@@ -7,7 +7,7 @@ import mindustry.type.*;
 public class XItems {
     public static Item
 
-    iron, tenmm, emptyRocket, flydradiumRocket;
+    iron, tenmm, tenmmE, emptyRocket, flydradiumRocket;
 
     public static void load(){
 
@@ -16,6 +16,10 @@ public class XItems {
         }};
 
         tenmm = new Item("10mm", Color.valueOf("ffad00")){{
+            radioactivity = 0f;
+        }};
+
+        tenmmE = new Item("10mmEXPL", Color.valueOf("ff6000")){{
             radioactivity = 0f;
         }};
 
