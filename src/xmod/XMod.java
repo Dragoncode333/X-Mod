@@ -14,6 +14,7 @@ import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.blocks.*;
 import xmod.content.*;
+import xmod.classes.*;
 
 import static java.lang.Float.*;
 import static mindustry.Vars.*;
@@ -29,5 +30,6 @@ public class XMod extends Mod{
         XItems.load();
         XLiquids.load();
         XBlocks.load();
+        XUnitTypes.load();
 	}
 }
