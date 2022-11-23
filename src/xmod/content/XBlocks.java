@@ -58,6 +58,9 @@ public class XBlocks {
         missile = new Floor("missile"){{
             requirements(Category.units, with(Items.copper, 65));
             size = 3;
+            inEditor = false;
+            placeableOn = false;
+            placeablePlayer = false;
         }};
 
         hugeMissile = new Floor("hugeMissile"){{
