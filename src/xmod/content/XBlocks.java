@@ -34,88 +34,36 @@ import mindustry.world.blocks.units.*;
 import mindustry.world.consumers.*;
 import mindustry.world.draw.*;
 import mindustry.world.meta.*;
-import xmod.classes.*;
 import mindustry.content.*;
+import xmod.classes.*;
+import mindustry.*;
+import mindustry.content.*;
+import mindustry.entities.effect.*;
+import mindustry.entities.pattern.*;
+import mindustry.game.*;
+import mindustry.gen.*;
+import mindustry.graphics.*;
+import mindustry.type.*;
+import mindustry.world.*;
+import mindustry.world.blocks.defense.*;
+import mindustry.world.blocks.defense.turrets.*;
+import mindustry.world.blocks.environment.*;
+import mindustry.world.blocks.logic.*;
+import mindustry.world.blocks.payloads.*;
+import mindustry.world.blocks.production.*;
+import mindustry.world.blocks.storage.*;
+import mindustry.world.draw.*;
+import mindustry.world.meta.*;
+
 
 import static mindustry.Vars.*;
 import static mindustry.type.ItemStack.*;
 
 public class XBlocks {
     public static Block
-    //turret
-    aller, simple, doubleGatling, rocketCrafter, rocketLauncher, turret, missile, hugeMissile, missileConstructor;
+    missileFactory, doubleGatling, rocketCrafter, rocketLauncher, turret;
 
     public static void load(){
-
-        aller = new Wall("chelour-wall"){{
-            requirements(Category.defense, with(Items.copper, 65));
-            health = 80;
-            size = 3;
-            researchCostMultiplier = 0.1f;
-            envDisabled |= Env.scorching;
-        }};
-
-        missile = new Floor("missile"){{
-            requirements(Category.units, with(Items.copper, 65));
-            size = 3;
-            inEditor = false;
-            placeableOn = false;
-            placeablePlayer = false;
-        }};
-
-        hugeMissile = new Floor("hugeMissile"){{
-            requirements(Category.units, with(Items.copper, 65));
-            size = 3;
-            inEditor = false;
-            placeableOn = false;
-            placeablePlayer = false;
-        }};
-
-        simple = new ItemTurret("simple"){{
-            requirements(Category.turret, with(Items.copper, 35));
-            ammo(
-                Items.copper,  new BasicBulletType(2.5f, 9){{
-                    width = 7f;
-                    height = 9f;
-                    lifetime = 60f;
-                    ammoMultiplier = 2;
-                    shootEffect = Fx.massiveExplosion;
-                }},
-                Items.graphite, new BasicBulletType(3.5f, 18){{
-                    width = 9f;
-                    height = 12f;
-                    reloadMultiplier = 0.6f;
-                    ammoMultiplier = 4;
-                    lifetime = 60f;
-                    shootEffect = Fx.scatheExplosion;
-                }},
-                Items.silicon, new BasicBulletType(3f, 12){{
-                    width = 7f;
-                    height = 9f;
-                    homingPower = 0.1f;
-                    reloadMultiplier = 1.5f;
-                    ammoMultiplier = 5;
-                    lifetime = 60f;
-                    shootEffect = Fx.scatheLight;
-                }}
-            );
-
-            shoot = new ShootAlternate(3.5f);
-
-            shootY = 3f;
-            reload = 20f;
-            range = 110;
-            shootCone = 15f;
-            ammoUseEffect = Fx.casing1;
-            health = 250;
-            inaccuracy = 2f;
-            rotateSpeed = 10f;
-            coolant = consumeCoolant(0.1f);
-            researchCostMultiplier = 0.05f;
-            envDisabled |= Env.scorching;
-
-            limitRange();
-        }};
 
         doubleGatling = new ItemTurret("double-gatling"){{
             requirements(Category.turret, with(Items.copper, 120, Items.titanium, 100, Items.graphite, 60, Items.silicon, 50));
@@ -341,7 +289,7 @@ public class XBlocks {
             envEnabled |= Env.scorching;
 
             ammo(
-                    XBlocks.missile, new BasicBulletType(11f, 500){{
+                    XBlocks.rocketCrafter, new BasicBulletType(11f, 500){{
                         lifetime = 30f;
                         range = 330f;
                         width = 12f;
@@ -359,7 +307,7 @@ public class XBlocks {
                         hitEffect = despawnEffect = Fx.hitBulletColor;
                         buildingDamageMultiplier = 0.3f;
                     }},
-                    XBlocks.hugeMissile, new BasicBulletType(13f, 750){{
+                    XBlocks.rocketLauncher, new BasicBulletType(13f, 750){{
                         lifetime = 35f;
                         range = 455;
                         width = 12f;
@@ -385,6 +333,24 @@ public class XBlocks {
                             lightningLength = 6;
                             lightningLengthRand = 3;
                         }};
+                    }},
+                    XUnits.missileamoi, new BasicBulletType(11f, 500){{
+                        lifetime = 30f;
+                        range = 330f;
+                        width = 12f;
+                        hitSize = 7f;
+                        height = 20f;
+                        smokeEffect = Fx.shootBigSmoke;
+                        ammoMultiplier = 1;
+                        pierceCap = 7;
+                        pierce = true;
+                        pierceBuilding = true;
+                        hitColor = backColor = trailColor = Color.valueOf("#89769a");
+                        frontColor = Color.white;
+                        trailWidth = 2.1f;
+                        trailLength = 10;
+                        hitEffect = despawnEffect = Fx.hitBulletColor;
+                        buildingDamageMultiplier = 0.3f;
                     }}
             );
 
@@ -422,16 +388,23 @@ public class XBlocks {
                 );
             }};
         }};
-
-        missileConstructor = new Constructor("missile-constructor"){{
-            requirements(Category.units, with(Items.silicon, 100, Items.titanium, 150, Items.copper, 80));
-            regionSuffix = "-dark";
-            hasPower = true;
-            buildSpeed = 0.6f;
-            consumePower(2f);
-            size = 4;
-            //TODO expand this list
-            filter = Seq.with(XBlocks.missile, XBlocks.hugeMissile);
+        
+        missileFactory = new UnitFactory("missile-factory"){{
+            requirements(Category.units, BuildVisibility.shown, with(XItems.iron, 50, Items.silicon, 40));
+            plans = Seq.with(new UnitPlan(XUnits.missileamoi, 60f * 8, with(Items.silicon, 5, XItems.iron, 3)));
+            size = 2;
+            consumePower(0.8f);
         }};
+
+        // missileConstructor = new Constructor("missile-constructor"){{
+        //     requirements(Category.units, with(Items.silicon, 100, Items.titanium, 150, Items.copper, 80));
+        //     regionSuffix = "-dark";
+        //     hasPower = true;
+        //     buildSpeed = 0.6f;
+        //     consumePower(2f);
+        //     size = 4;
+        //     maxBlockSize = 10;
+        //     filter = Seq.with(XBlocks.missile, XBlocks.hugeMissile);
+        // }};
     }
 }

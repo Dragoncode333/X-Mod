@@ -27,9 +27,10 @@ public class XMod extends Mod{
 
     @Override
 	public void loadContent() {
-        XItems.load();
         XLiquids.load();
+        XItems.load();
+        XUnits.load();
         XBlocks.load();
-        XUnitTypes.load();
+        XPlanets.load();
 	}
 }
