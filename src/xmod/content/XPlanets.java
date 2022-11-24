@@ -40,13 +40,15 @@ public class XPlanets{
             );
         }};
 
-        planète3 = new Planet("planète3", Planets.sun, 1f, 2.25){{
+        planète3 = new Planet("planète3", Planets.sun, 1f, 2.25f){{
             generator = new Planete3Generatore();
             meshLoader = () -> new HexMesh(this, 6);
             cloudMeshLoader = () -> new MultiMesh(
                 new HexSkyMesh(this, 11, 0.15f, 0.13f, 5, new Color().set(Pal.spore).mul(0.9f).a(0.75f), 2, 0.45f, 0.9f, 0.38f),
                 new HexSkyMesh(this, 1, 0.6f, 0.16f, 5, Color.white.cpy().lerp(Pal.spore, 0.55f).a(0.75f), 2, 0.45f, 1f, 0.41f)
             );
+
+            orbitRadius = 25f;
             
             launchCapacityMultiplier = 0.5f;
             sectorSeed = 2;
