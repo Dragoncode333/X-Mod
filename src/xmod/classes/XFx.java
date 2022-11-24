@@ -1,4 +1,4 @@
-package xmod.content;
+package xmod.classes;
 
 import arc.Core;
 import arc.graphics.*;
@@ -33,6 +33,21 @@ public class XFx {
     public static final Vec2 v = new Vec2();
 
     public static final Effect
+
+    cannonShoot = new Effect(25f, e -> {
+        color(Pal.engine);
+
+        e.scaled(15f, e2 -> {
+            stroke(e2.fout() * 4.1f);
+            Lines.circle(e2.x, e2.y, 4f + e2.fin() * 23f);
+        });
+
+        stroke(e.fout() * 2.5f);
+
+        randLenVectors(e.id, 18, 8f + 30f * e.finpow(), e.rotation, 130f, (x, y) -> {
+            lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), e.fin() * 6f + 1f);
+        });
+    }),
 
     mediumMissileTrailSmoke = new Effect(95f, 200f, b -> {
         float intensity = 2f;

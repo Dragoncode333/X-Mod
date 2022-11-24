@@ -12,7 +12,7 @@ public class XLiquids {
     public static void load(){
 
         coolantLiquid = new Liquid("coolant-liquid", Color.valueOf("8fe9ff")){{
-            heatCapacity = 0.95f;
+            heatCapacity = 5f;
             temperature = 0.15f;
             viscosity = 0f;
             flammability = 0f;
