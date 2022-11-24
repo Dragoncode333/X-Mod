@@ -40,7 +40,7 @@ public class XPlanets{
             );
         }};
 
-        planète3 = new Planet("planète3", Planets.sun, 1f, 2.25f){{
+        planète3 = new Planet("planète3", Planets.sun, 1f, 3){{
             generator = new Planete3Generatore();
             meshLoader = () -> new HexMesh(this, 6);
             cloudMeshLoader = () -> new MultiMesh(
