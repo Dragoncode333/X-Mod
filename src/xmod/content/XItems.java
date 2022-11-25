@@ -26,7 +26,7 @@ public class XItems {
             charge = 8;
             frames = 2;
             frameTime = 1;
-            transition frames = 90;
+            transitionFrames = 90;
         }};
 
         tenmm = new Item("10mm", Color.valueOf("ffad00")){{
