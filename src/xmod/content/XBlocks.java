@@ -61,9 +61,17 @@ import static mindustry.type.ItemStack.*;
 
 public class XBlocks {
     public static Block
+
+    msand,
     missileFactory, doubleGatling, rocketCrafter, rocketLauncher, turret;
 
     public static void load(){
+
+        msand = new Floor("msand-floor"){{
+            itemDrop = Items.sand;
+            playerUnmineable = true;
+            attributes.set(Attribute.oil, 0.7f);
+        }};
 
         doubleGatling = new ItemTurret("double-gatling"){{
             requirements(Category.turret, with(Items.copper, 120, Items.titanium, 100, Items.graphite, 60, Items.silicon, 50));
