@@ -29,13 +29,13 @@ public class Planete3Generatore extends PlanetGenerator{
 
     Block[][] arr =
     {
-    {Blocks.water, Blocks.darksandWater, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.sand, Blocks.sand, Blocks.sand, Blocks.sand, Blocks.darksandTaintedWater, Blocks.stone, Blocks.stone},
-    {Blocks.water, Blocks.darksandWater, Blocks.darksand, Blocks.darksand, Blocks.sand, Blocks.sand, Blocks.sand, Blocks.sand, Blocks.sand, Blocks.darksandTaintedWater, Blocks.stone, Blocks.stone, Blocks.stone},
-    {Blocks.water, Blocks.darksandWater, Blocks.darksand, Blocks.sand, Blocks.salt, Blocks.sand, Blocks.sand, Blocks.sand, Blocks.sand, Blocks.darksandTaintedWater, Blocks.stone, Blocks.stone, Blocks.stone},
-    {Blocks.water, Blocks.sandWater, Blocks.sand, Blocks.salt, Blocks.salt, Blocks.salt, Blocks.sand, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.snow, Blocks.iceSnow, Blocks.ice},
-    {Blocks.deepwater, Blocks.water, Blocks.sandWater, Blocks.sand, Blocks.salt, Blocks.sand, Blocks.sand, Blocks.basalt, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.ice},
-    {Blocks.deepwater, Blocks.water, Blocks.sandWater, Blocks.sand, Blocks.sand, Blocks.sand, Blocks.moss, Blocks.iceSnow, Blocks.snow, Blocks.snow, Blocks.ice, Blocks.snow, Blocks.ice},
-    {Blocks.deepwater, Blocks.sandWater, Blocks.sand, Blocks.sand, Blocks.moss, Blocks.moss, Blocks.snow, Blocks.basalt, Blocks.basalt, Blocks.basalt, Blocks.ice, Blocks.snow, Blocks.ice},
+    {Blocks.water, Blocks.darksandWater, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.darksand, XBlocks.msand, XBlocks.msand, XBlocks.msand, XBlocks.msand, Blocks.darksandTaintedWater, Blocks.stone, Blocks.stone},
+    {Blocks.water, Blocks.darksandWater, Blocks.darksand, Blocks.darksand, XBlocks.msand, XBlocks.msand, XBlocks.msand, XBlocks.msand, XBlocks.msand, Blocks.darksandTaintedWater, Blocks.stone, Blocks.stone, Blocks.stone},
+    {Blocks.water, Blocks.darksandWater, Blocks.darksand, XBlocks.msand, Blocks.salt, XBlocks.msand, XBlocks.msand, XBlocks.msand, XBlocks.msand, Blocks.darksandTaintedWater, Blocks.stone, Blocks.stone, Blocks.stone},
+    {Blocks.water, Blocks.sandWater, XBlocks.msand, Blocks.salt, Blocks.salt, Blocks.salt, XBlocks.msand, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.snow, Blocks.iceSnow, Blocks.ice},
+    {Blocks.deepwater, Blocks.water, Blocks.sandWater, XBlocks.msand, Blocks.salt, XBlocks.msand, XBlocks.msand, Blocks.basalt, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.ice},
+    {Blocks.deepwater, Blocks.water, Blocks.sandWater, XBlocks.msand, XBlocks.msand, XBlocks.msand, Blocks.moss, Blocks.iceSnow, Blocks.snow, Blocks.snow, Blocks.ice, Blocks.snow, Blocks.ice},
+    {Blocks.deepwater, Blocks.sandWater, XBlocks.msand, XBlocks.msand, Blocks.moss, Blocks.moss, Blocks.snow, Blocks.basalt, Blocks.basalt, Blocks.basalt, Blocks.ice, Blocks.snow, Blocks.ice},
     {Blocks.deepTaintedWater, Blocks.darksandTaintedWater, Blocks.darksand, Blocks.darksand, Blocks.basalt, Blocks.moss, Blocks.basalt, Blocks.hotrock, Blocks.basalt, Blocks.ice, Blocks.snow, Blocks.ice, Blocks.ice},
     {Blocks.darksandWater, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.moss, Blocks.sporeMoss, Blocks.snow, Blocks.basalt, Blocks.basalt, Blocks.ice, Blocks.snow, Blocks.ice, Blocks.ice},
     {Blocks.darksandWater, Blocks.darksand, Blocks.darksand, Blocks.sporeMoss, Blocks.ice, Blocks.ice, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.snow, Blocks.ice, Blocks.ice, Blocks.ice},
@@ -110,7 +110,7 @@ public class Planete3Generatore extends PlanetGenerator{
     public Color getColor(Vec3 position){
         Block block = getBlock(position);
         //replace salt with sand color
-        if(block == Blocks.salt) return Blocks.sand.mapColor;
+        if(block == Blocks.salt) return XBlocks.msand.mapColor;
         return Tmp.c1.set(block.mapColor).a(1f - block.albedo);
     }
 
@@ -212,7 +212,7 @@ public class Planete3Generatore extends PlanetGenerator{
                                 if(Mathf.within(x, y, rad - 1) && !other.floor().isLiquid){
                                     Floor floor = other.floor();
                                     //TODO does not respect tainted floors
-                                    other.setFloor((Floor)(floor == Blocks.sand || floor == Blocks.salt ? Blocks.sandWater : Blocks.darksandTaintedWater));
+                                    other.setFloor((Floor)(floor == XBlocks.msand || floor == Blocks.salt ? Blocks.sandWater : Blocks.darksandTaintedWater));
                                 }
                             }
                         }
@@ -349,14 +349,14 @@ public class Planete3Generatore extends PlanetGenerator{
 
             if(value > 0.17f && !Mathf.within(x, y, fspawn.x, fspawn.y, 12 + rrscl)){
                 boolean deep = value > 0.17f + 0.1f && !Mathf.within(x, y, fspawn.x, fspawn.y, 15 + rrscl);
-                boolean spore = floor != Blocks.sand && floor != Blocks.salt;
+                boolean spore = floor != XBlocks.msand && floor != Blocks.salt;
                 //do not place rivers on ice, they're frozen
                 //ignore pre-existing liquids
                 if(!(floor == Blocks.ice || floor == Blocks.iceSnow || floor == Blocks.snow || floor.asFloor().isLiquid)){
                     floor = spore ?
                         (deep ? Blocks.taintedWater : Blocks.darksandTaintedWater) :
                         (deep ? Blocks.water :
-                            (floor == Blocks.sand || floor == Blocks.salt ? Blocks.sandWater : Blocks.darksandWater));
+                            (floor == XBlocks.msand || floor == Blocks.salt ? Blocks.sandWater : Blocks.darksandWater));
                 }
             }
         });
@@ -502,9 +502,9 @@ public class Planete3Generatore extends PlanetGenerator{
                 float noise = noise(x + 782, y, 5, 0.75f, 260f, 1f);
                 if(noise > 0.67f && !roomseq.contains(e -> Mathf.within(x, y, e.x, e.y, 14))){
                     if(noise > 0.72f){
-                        floor = noise > 0.78f ? Blocks.taintedWater : (floor == Blocks.sand ? Blocks.sandWater : Blocks.darksandTaintedWater);
+                        floor = noise > 0.78f ? Blocks.taintedWater : (floor == XBlocks.msand ? Blocks.sandWater : Blocks.darksandTaintedWater);
                     }else{
-                        floor = (floor == Blocks.sand ? floor : Blocks.darksand);
+                        floor = (floor == XBlocks.msand ? floor : Blocks.darksand);
                     }
                 }
             }
