@@ -24,6 +24,9 @@ public class XItems {
             hardness = 5;
             radioactivity = 3;
             charge = 8;
+            frames = 2;
+            frameTime = 1;
+            transition frames = 90;
         }};
 
         tenmm = new Item("10mm", Color.valueOf("ffad00")){{
