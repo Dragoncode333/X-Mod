@@ -141,7 +141,7 @@ public class XPlanets{
 
 //Planets of base System
         holyar = new Planet("holyar", Planets.sun, 1.05f, 4){{
-            generator = new Planete3Generatore();
+            generator = new XPlanetGenerator();
             meshLoader = () -> new HexMesh(this, 6);
             cloudMeshLoader = () -> new MultiMesh(
                     new HexSkyMesh(this, 11, 0.15f, 0.13f, 5, new Color().set(Pal.spore).mul(0.9f).a(0.75f), 2, 0.45f, 0.9f, 0.38f),
@@ -176,7 +176,7 @@ public class XPlanets{
         }};
 
         abol = new Planet("abol", XPlanets.holyar, 0.775f, 2){{
-            generator = new Planete3Generatore();
+            generator = new XPlanetGenerator();
             meshLoader = () -> new HexMesh(this, 6);
             cloudMeshLoader = () -> new MultiMesh(
                 new HexSkyMesh(this, 11, 0.15f, 0.13f, 5, new Color().set(Pal.spore).mul(0.9f).a(0.75f), 2, 0.45f, 0.9f, 0.38f),
