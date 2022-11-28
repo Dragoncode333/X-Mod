@@ -16,7 +16,7 @@ public class XDisclaimer extends BaseDialog {
         buttons.defaults().size(200f, 54f).pad(2f);
         setFillParent(false);
 
-        TextButton b = buttons.button("@mod.xmod.ok", this::hide).get();
+        TextButton b = buttons.button("@mod.xmod.disclaimer.ok", this::hide).get();
 
         if(shouldSkip()) return;
 
@@ -30,7 +30,7 @@ public class XDisclaimer extends BaseDialog {
         b.getStyle().disabledFontColor = b.getStyle().fontColor;
         b.getStyle().disabled = b.getStyle().up;
 
-        TextButton s = buttons.button("@mod.xmod.doNotShowItAgain", () -> {
+        TextButton s = buttons.button("@mod.xmod.diaclaimer.doNotShowItAgain", () -> {
             hide();
             settings.put("mod.xmod.show", true);
         }).get();
