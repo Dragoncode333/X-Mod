@@ -30,7 +30,7 @@ public class XDisclaimer extends BaseDialog {
         b.getStyle().disabledFontColor = b.getStyle().fontColor;
         b.getStyle().disabled = b.getStyle().up;
 
-        TextButton s = buttons.button("@mod.xmod.diaclaimer.doNotShowItAgain", () -> {
+        TextButton s = buttons.button("@mod.xmod.disclaimer.doNotShowItAgain", () -> {
             hide();
             settings.put("mod.xmod.show", true);
         }).get();
