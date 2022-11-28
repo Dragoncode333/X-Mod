@@ -72,8 +72,8 @@ public class XPlanets{
             generator = new XPlanetGenerator();
             meshLoader = () -> new HexMesh(this, 6);
             cloudMeshLoader = () -> new MultiMesh(
-                new HexSkyMesh(this, 11, 0.75f, 0.23f, 5, Color.valueOf("5672d7").a(0.75f), 2, 0.45f, 0.9f, 0.36f),
-                new HexSkyMesh(this, 1, 1f, 0.28f, 5, Color.valueOf("778ee5").a(0.75f), 2, 0.45f, 1f, 0.38f)
+                new HexSkyMesh(this, 11, 1.1f, 0.23f, 5, Color.valueOf("5672d7").a(0.75f), 2, 0.45f, 0.9f, 0.36f),
+                new HexSkyMesh(this, 1, 1.35f, 0.28f, 5, Color.valueOf("778ee5").a(0.75f), 2, 0.45f, 1f, 0.38f)
             );
 
             orbitRadius = 112f;
