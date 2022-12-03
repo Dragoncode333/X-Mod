@@ -61,9 +61,82 @@ import static mindustry.type.ItemStack.*;
 
 public class XBlocks {
     public static Block
-    missileFactory, doubleGatling, rocketCrafter, rocketLauncher, turret;
+    msand, oreIron, oreFlydradium,
+    trio, missileFactory, doubleGatling, rocketCrafter, rocketLauncher, rocketLauncher2, turret;
 
     public static void load(){
+
+        oreIron = new OreBlock("ore-iron"){{
+            itemDrop = XItems.iron;
+            oreDefault = true;
+            oreScale = 24.3f;
+            oreThreshold = 0.8335f;
+        }};
+
+        // oreFlydradium = new OreBlock("ore-flydradium"){{
+        //     itemDrop = XItems.flydradium;
+        //     oreDefault = true;
+        //     oreScale = 25.380953f;
+        //     oreThreshold = 0.9f;
+        // }};
+        
+        oreFlydradium = new OreBlock("ore-flydradium"){{
+            itemDrop = XItems.flydradium;
+            oreDefault = true;
+            oreScale = 35f;
+            oreThreshold = 0.89f;
+        }};
+
+        msand = new Floor("msand-floor"){{
+            itemDrop = Items.sand;
+            playerUnmineable = true;
+            attributes.set(Attribute.oil, 0.7f);
+        }};
+
+        trio = new ItemTurret("trio"){{
+            requirements(Category.turret, with(Items.copper, 20, XItems.iron, 60));
+            ammo(
+                XItems.iron, new BasicBulletType(2.25f, 13){{
+                    width = 7f;
+                    height = 9f;
+                    lifetime = 100f;
+                }},
+                Items.graphite, new BasicBulletType(3.5f, 18){{
+                    width = 9f;
+                    height = 12f;
+                    reloadMultiplier = 0.6f;
+                    ammoMultiplier = 4;
+                    lifetime = 60f;
+                }},
+                Items.silicon, new BasicBulletType(3f, 12){{
+                    width = 7f;
+                    height = 9f;
+                    homingPower = 0.1f;
+                    reloadMultiplier = 1.5f;
+                    ammoMultiplier = 5;
+                    lifetime = 60f;
+                }}
+            );
+
+            shoot = new ShootAlternate(){{
+                barrels = 3;
+                spread = 2.5f;
+                barrelOffset = 2;
+            }};
+
+            shootY = 3f;
+            reload = 12f;
+            range = 125;
+            shootCone = 15f;
+            ammoUseEffect = Fx.casing2;
+            health = 325;
+            inaccuracy = 2.5f;
+            rotateSpeed = 9f;
+            coolant = consumeCoolant(0.1f);
+            researchCostMultiplier = 0.15f;
+
+            limitRange();
+        }};
 
         doubleGatling = new ItemTurret("double-gatling"){{
             requirements(Category.turret, with(Items.copper, 120, Items.titanium, 100, Items.graphite, 60, Items.silicon, 50));
@@ -181,6 +254,108 @@ public class XBlocks {
                 ammoMultiplier = 1f;
 
                 spawnUnit = new MissileUnitType("manger-missile"){{
+                    speed = 6.5f;
+                    maxRange = 6f;
+                    lifetime = 60f * 5.5f;
+                    outlineColor = Pal.darkOutline;
+                    engineColor = trailColor = Pal.redLight;
+                    engineLayer = Layer.effect;
+                    engineSize = 2.25f;
+                    engineOffset = 10f;
+                    rotateSpeed = 0.05f;
+                    trailLength = 18;
+                    missileAccelTime = 20f;
+                    lowAltitude = true;
+                    loopSound = Sounds.missileTrail;
+                    loopSoundVolume = 0.6f;
+                    deathSound = Sounds.largeExplosion;
+                    targetAir = false;
+
+                    fogRadius = 4.75f;
+
+                    health = 210;
+
+                    weapons.add(new Weapon(){{
+                        shootCone = 360f;
+                        mirror = false;
+                        reload = 1f;
+                        deathExplosionEffect = Fx.massiveExplosion;
+                        shootOnDeath = true;
+                        shake = 11f;
+                        bullet = new ExplosionBulletType(21f, 50f){{
+                            hitColor = Pal.redLight;
+                            shootEffect = new MultiEffect(XFx.mediumMassiveExplosion, XFx.mediumScatheExplosion, XFx.mediumScatheLight, new WaveEffect(){{
+                                lifetime = 10f;
+                                strokeFrom = 4f;
+                                sizeTo = 97.5f;
+                            }});
+
+                            collidesAir = false;
+                            buildingDamageMultiplier = 0.3f;
+
+                            ammoMultiplier = 1f;
+                        }};
+                    }});
+
+                    abilities.add(new MoveEffectAbility(){{
+                        effect = XFx.mediumMissileTrailSmoke;
+                        rotation = 180f;
+                        y = -9f;
+                        color = Color.grays(0.6f).lerp(Pal.redLight, 0.5f).a(0.4f);
+                        interval = 7f;
+                    }});
+                }};
+            }}
+            );
+
+            drawer = new DrawTurret("powerful-"){{
+
+            }};
+
+            shoot = new ShootAlternate(){{
+                shots = 7;
+                barrels = 4;
+                spread = 9f;
+                shotDelay = 11f;
+            }};
+            recoil = 8f;
+            recoilTime = 45f;
+
+            fogRadiusMultiuplier = 0.75f;
+            coolantMultiplier = 6f;
+            shootSound = Sounds.missileLaunch;
+
+            cooldownTime = 60;
+            minWarmup = 0.99f;
+            targetAir = false;
+
+            shake = 6f;
+            ammoPerShot = 7;
+            maxAmmo = 7;
+            shootY = 0;
+            outlineColor = Pal.darkOutline;
+            size = 6;
+            envEnabled |= Env.scorching;
+            reload = 200;
+            range = 1350;
+            shootCone = 1f;
+            health = 3000;
+            rotateSpeed = 0.75f;
+
+            coolant = consume(new ConsumeLiquid(XLiquids.coolantLiquid, 60f / 30f));
+            limitRange();
+        }};
+
+        rocketLauncher2 = new PayloadAmmoTurret("rocket-launcher2"){{
+            requirements(Category.turret, with(Items.silicon, 450, Items.graphite, 400, Items.copper, 500, Items.lead, 300));
+
+            ammo(
+            XUnits.missileamoi, new BasicBulletType(0f, 1){{
+                shootEffect = Fx.shootBig;
+                smokeEffect = XFx.mediumShootSmokeMissile;
+                ammoMultiplier = 1f;
+
+                spawnUnit = new MissileUnitType("manger-missile2"){{
                     speed = 6.5f;
                     maxRange = 6f;
                     lifetime = 60f * 5.5f;

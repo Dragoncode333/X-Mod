@@ -3,11 +3,17 @@ package xmod.content;
 import arc.graphics.*;
 import arc.struct.*;
 import mindustry.type.*;
+import mindustry.*;
+
+import static mindustry.content.Items.*;
 
 public class XItems {
     public static Item
-
     iron, flydradium, tenmm, tenmmE, emptyRocket, flydradiumRocket;
+
+    public static final Seq<Item> 
+    abolItems = new Seq<>(), abolOnlyItems = new Seq<>(),
+    holyarItems = new Seq<>(), holyarOnlyItems = new Seq<>();
 
     public static void load(){
 
@@ -19,6 +25,9 @@ public class XItems {
             hardness = 5;
             radioactivity = 3;
             charge = 8;
+            frames = 2;
+            frameTime = 1;
+            transitionFrames = 100;
         }};
 
         tenmm = new Item("10mm", Color.valueOf("ffad00")){{
@@ -37,5 +46,22 @@ public class XItems {
             hardness = 1;
             cost = 0.7f;
         }};
+
+        abolItems.addAll(
+        iron, flydradium,
+        //Serpulo's items
+        scrap, copper, lead, graphite, coal, titanium, thorium, silicon, plastanium,
+        phaseFabric, surgeAlloy, sporePod, sand, blastCompound, pyratite, metaglass
+        );
+
+        holyarItems.addAll(
+        iron,
+        //Serpulo's items
+        scrap, copper, lead, graphite, coal, titanium, thorium, silicon, plastanium,
+        phaseFabric, surgeAlloy, sporePod, sand, blastCompound, pyratite, metaglass
+        );
+
+        abolOnlyItems.addAll(abolItems).removeAll(holyarItems);
+        holyarOnlyItems.addAll(holyarItems).removeAll(abolItems);
     }
 }

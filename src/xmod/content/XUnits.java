@@ -186,17 +186,18 @@ import mindustry.gen.Unitc;
 import mindustry.type.UnitType;
 import mindustry.type.Weapon;
 import mindustry.type.ammo.PowerAmmoType;
+import mindustry.type.unit.*;
 
 
 public class XUnits{
     //core units
-    public static UnitType blaze, missileamoi;
+    public static UnitType blaze, tanker, missileamoi;
     public static void load(){
         //core units
         blaze = new UnitType("blaze"){{
             constructor = LegsUnit::create;
             outlineColor = Color.valueOf("2b2c34");
-            speed = 1.0f;
+            speed = 0.35f;
             hitSize = 8f;
             health = 1000;
 
@@ -219,6 +220,47 @@ public class XUnits{
                     collidesTeam = true;
                     backColor = Color.valueOf("ffd37f");
                     frontColor = Color.white;
+                }};
+            }});
+        }};
+
+        tanker = new TankUnitType("tanker"){{
+            constructor = TankUnit::create;
+            hitSize = 20f;
+            treadPullOffset = 3;
+            speed = 0.625f;
+            rotateSpeed = 2.25f;
+            health = 2000;
+            armor = 6f;
+            itemCapacity = 0;
+            researchCostMultiplier = 0f;
+
+            weapons.add(new Weapon("tanker-weapon"){{
+                layerOffset = 0.0001f;
+                reload = 50f;
+                shootY = 4.5f;
+                recoil = 1f;
+                rotate = true;
+                rotateSpeed = 2.2f;
+                mirror = false;
+                x = 0f;
+                y = -0.75f;
+                heatColor = Color.valueOf("f9350f");
+                cooldownTime = 30f;
+
+                bullet = new BasicBulletType(4f, 100){{
+                    sprite = "missile-extra-large";
+                    smokeEffect = Fx.shootBigSmoke;
+                    shootEffect = Fx.shootBigColor;
+                    width = 5f;
+                    height = 7f;
+                    lifetime = 40f;
+                    hitSize = 4f;
+                    hitColor = backColor = trailColor = Color.valueOf("feb380");
+                    frontColor = Color.white;
+                    trailWidth = 1.7f;
+                    trailLength = 5;
+                    despawnEffect = hitEffect = Fx.hitBulletColor;
                 }};
             }});
         }};

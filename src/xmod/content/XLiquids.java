@@ -7,9 +7,27 @@ import mindustry.content.*;
 public class XLiquids {
     public static Liquid 
 
-    coolantLiquid;
+    poison, poisonGas, coolantLiquid;
 
     public static void load(){
+
+        poison = new Liquid("poison", Color.valueOf("ae0fc980")){{
+            temperature = 0.5f;
+            viscosity = 0.9f;
+            effect = XStatusEffects.eroded;
+            moveThroughBlocks = true;
+            coolant = false;
+        }};
+
+        poisonGas = new Liquid("poison-gas", Color.valueOf("ae0fc980")){{
+            temperature = 0.5f;
+            viscosity = 0.9f;
+            effect = XStatusEffects.eroded;
+            moveThroughBlocks = true;
+            coolant = false;
+            gasColor = Color.valueOf("ae0fc980");
+            gas = true;
+        }};
 
         coolantLiquid = new Liquid("coolant-liquid", Color.valueOf("8fe9ff")){{
             heatCapacity = 5f;
@@ -22,5 +40,5 @@ public class XLiquids {
             incinerable = true;
             blockReactive = true;
         }};
-    };
+    }
 }
