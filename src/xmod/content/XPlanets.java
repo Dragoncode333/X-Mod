@@ -62,8 +62,8 @@ public class XPlanets {
                 new HexSkyMesh(this, 1, 0.6f, 0.15f, 5, Color.white, 2, 0.45f, 1f, 0.41f)
             );
             atmosphereColor = Color.valueOf("3db899");
-            atmosphereRadIn = -0.01f;
-            atmosphereRadOut = 0.3f;
+            atmosphereRadIn = 0f;
+            atmosphereRadOut = 0.175f;
             landCloudColor = Pal.spore.cpy().a(0.5f);
             iconColor = Color.valueOf("597be3");
             defaultCore = XBlocks.xCore;
