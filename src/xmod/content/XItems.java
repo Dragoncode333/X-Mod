@@ -13,7 +13,8 @@ public class XItems {
 
     public static final Seq<Item> 
     abolItems = new Seq<>(), abolOnlyItems = new Seq<>(),
-    holyarItems = new Seq<>(), holyarOnlyItems = new Seq<>();
+    holyarItems = new Seq<>(), holyarOnlyItems = new Seq<>(),
+    planet4546BItems = new Seq<>();
 
     public static void load(){
 
@@ -56,6 +57,13 @@ public class XItems {
 
         holyarItems.addAll(
         iron,
+        //Serpulo's items
+        scrap, copper, lead, graphite, coal, titanium, thorium, silicon, plastanium,
+        phaseFabric, surgeAlloy, sporePod, sand, blastCompound, pyratite, metaglass
+        );
+
+        planet4546BItems.addAll(
+        iron, flydradium,
         //Serpulo's items
         scrap, copper, lead, graphite, coal, titanium, thorium, silicon, plastanium,
         phaseFabric, surgeAlloy, sporePod, sand, blastCompound, pyratite, metaglass

@@ -24,20 +24,22 @@ import static java.lang.Float.*;
 import static mindustry.Vars.*;
 import static arc.Core.*;
 
-public class XMod extends Mod{
+public class XMod extends Mod {
 
     @Override
-    public void init(){
+    public void init() {
         super.init();
         XSolarSystem.init();
         LoadedMod mod = mods.locateMod("xmod");
-        if(!headless){
-            //from Betamindy by sk7725
+        if (!headless) {
+            // from Betamindy by sk7725
             Func<String, String> stringf = value -> bundle.get("mod." + value);
 
             // mod.meta.displayName = stringf.get(mod.meta.name + ".name");
-            // mod.meta.description = bundle.get("mod.ol.description") +"\n\n"+ bundle.get("mod.ol.musics");
-            // mod.meta.author = bundle.get("mod.ol.author") + "\n\n" + bundle.get("mod.ol.contributors");
+            // mod.meta.description = bundle.get("mod.ol.description") +"\n\n"+
+            // bundle.get("mod.ol.musics");
+            // mod.meta.author = bundle.get("mod.ol.author") + "\n\n" +
+            // bundle.get("mod.ol.contributors");
 
             Events.on(ClientLoadEvent.class, e -> {
                 app.post(() -> app.post(() -> {
@@ -49,12 +51,12 @@ public class XMod extends Mod{
         }
     };
 
-    public XMod(){
-        
+    public XMod() {
+
     };
 
     @Override
-	public void loadContent() {
+    public void loadContent() {
         XLiquids.load();
         XItems.load();
         XUnits.load();
@@ -63,5 +65,5 @@ public class XMod extends Mod{
         SerpuloTechTree.load();
         AbolTechTree.load();
         // XSerpuloTechTree.load();
-	}
+    }
 }
