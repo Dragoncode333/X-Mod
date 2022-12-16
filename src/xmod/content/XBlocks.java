@@ -537,7 +537,7 @@ public class XBlocks {
             heatColor = Pal.turretHeat;
 
             shoot = new ShootAlternate(){{
-                spread = 21;
+                spread = 17;
                 shots = 2;
             }};
 
