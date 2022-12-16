@@ -11,6 +11,7 @@ import mindustry.maps.generators.*;
 import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.*;
+import xmod.content.*;
 
 import static mindustry.Vars.*;
 
@@ -20,6 +21,10 @@ public class XPlanet4546BGenerator extends PlanetGenerator{
     Block[][] arr = {
     {Blocks.redmat, Blocks.redmat, Blocks.darksand, Blocks.bluemat, Blocks.bluemat}
     };
+
+    {
+        defaultLoadout = XSchematics.xCore;
+    }
 
     {
         baseSeed = 1;

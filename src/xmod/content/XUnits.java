@@ -7,6 +7,7 @@ import arc.math.geom.*;
 import arc.util.*;
 import arc.struct.*;
 import mindustry.ai.types.*;
+import mindustry.graphics.*;
 import mindustry.content.*;
 import mindustry.entities.*;
 import mindustry.entities.abilities.*;
@@ -191,22 +192,22 @@ import mindustry.type.unit.*;
 
 public class XUnits{
     //core units
-    public static UnitType xAlpha, blaze, tanker, missileamoi;
+    public static UnitType xalpha, xbeta, blaze, tanker, missileamoi;
     public static void load(){
         //core units
-        xAlpha = new UnitType("alpha"){{
-            controller = u -> new BuilderAI(true, 500f);
+        xalpha = new UnitType("xalpha"){{
             constructor = UnitEntity::create;
+            aiController = BuilderAI::new;
             isEnemy = false;
-            envRequired = Env.underwater;
 
+            trailLength = 5;
             lowAltitude = true;
             flying = true;
             mineSpeed = 6.5f;
             mineTier = 1;
             buildSpeed = 0.5f;
             drag = 0.05f;
-            speed = 0.25f;
+            speed = 5f;
             rotateSpeed = 15f;
             accel = 0.1f;
             itemCapacity = 30;
@@ -229,6 +230,62 @@ public class XUnits{
                     shootEffect = Fx.shootSmall;
                     smokeEffect = Fx.shootSmallSmoke;
                     buildingDamageMultiplier = 0.01f;
+                }};
+            }});
+        }};
+
+        xbeta = new UnitType("xbeta"){{
+            constructor = UnitWaterMove::create;
+            speed = 1.1f;
+            drag = 0.13f;
+            hitSize = 10f;
+            health = 280;
+            accel = 0.4f;
+            rotateSpeed = 3.3f;
+            faceTarget = false;
+
+            armor = 2f;
+
+            weapons.add(new Weapon("mount-weapon"){{
+                reload = 13f;
+                x = 4f;
+                shootY = 4f;
+                y = 1.5f;
+                rotate = true;
+                ejectEffect = Fx.casing1;
+                bullet = new BasicBulletType(2.5f, 9){{
+                    width = 7f;
+                    height = 9f;
+                    lifetime = 60f;
+                    ammoMultiplier = 2;
+                }};
+            }});
+
+            weapons.add(new Weapon("missiles-mount"){{
+                mirror = false;
+                reload = 25f;
+                x = 0f;
+                y = -5f;
+                rotate = true;
+                ejectEffect = Fx.casing1;
+                shootSound = Sounds.missile;
+                bullet = new MissileBulletType(2.7f, 12, "missile"){{
+                    keepVelocity = true;
+                    width = 8f;
+                    height = 8f;
+                    shrinkY = 0f;
+                    drag = -0.003f;
+                    homingRange = 60f;
+                    splashDamageRadius = 25f;
+                    splashDamage = 10f;
+                    lifetime = 65f;
+                    trailColor = Color.gray;
+                    backColor = Pal.bulletYellowBack;
+                    frontColor = Pal.bulletYellow;
+                    hitEffect = Fx.blastExplosion;
+                    despawnEffect = Fx.blastExplosion;
+                    weaveScale = 8f;
+                    weaveMag = 2f;
                 }};
             }});
         }};

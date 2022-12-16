@@ -11,6 +11,7 @@ import xmod.*;
 import mindustry.*;
 import mindustry.content.*;
 import mindustry.entities.*;
+import mindustry.entities.effect.*;
 import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.graphics.*;
@@ -128,5 +129,19 @@ public class XFx {
 
         color(e.color, e.foutpow());
         Fill.circle(e.x, e.y, circleRad);
-    }).layer(Layer.bullet + 2f);
+    }).layer(Layer.bullet + 2f),
+
+    gasEffect = new ParticleEffect(){{
+        particles = 3;
+        sizeFrom = 11;
+        sizeTo = 5;
+        length = 75;
+        lifetime = 115;
+        lightOpacity = 0;
+        interp = Interp.circleOut;
+        sizeInterp = Interp.pow5In;
+        cone = 300;
+        colorFrom = Color.valueOf("ae0fc933");
+        colorTo = Color.valueOf("ae0fc91A");
+    }};
 }

@@ -542,7 +542,8 @@ public class XberqbPlanetGenerator extends PlanetGenerator {
         state.rules.showSpawns = true;
 
         //spawn air only when spawn is blocked
-        state.rules.spawns = XWaves.generate(difficulty, new Rand(sector.id), state.rules.attackMode, state.rules.attackMode && spawner.countGroundSpawns() == 0, naval);
+        state.rules.spawns = XWaves.generate(difficulty, new Rand(sector.id), state.rules.attackMode);
+        // state.rules.spawns = XWaves.generate(difficulty, new Rand(sector.id), state.rules.attackMode, state.rules.attackMode && spawner.countGroundSpawns() == 0, naval);
     }
 
     @Override

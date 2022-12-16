@@ -37,6 +37,7 @@ import mindustry.world.draw.*;
 import mindustry.world.meta.*;
 import mindustry.content.*;
 import xmod.classes.*;
+import xmod.entities.pattern.*;
 import xmod.entities.bullet.*;
 import xmod.graphics.XPal;
 import mindustry.*;
@@ -66,7 +67,7 @@ public class XBlocks {
             continuous, pointDefense, laser, lightning,
             xCore,
             trio, base, baseBomb, gunBlade, railGun, missileFactory, doubleGatling, rocketCrafter, rocketLauncher,
-            rocketLauncher2, turret;
+            rocketLauncher2, turret, poisonTurret, letsGo, fAntonin;
 
     public static void load() {
 
@@ -179,61 +180,53 @@ public class XBlocks {
             }
         };
 
-        pointDefense = new PointDefenseTurret("pointdefense-segment") {
-            {
-                requirements(Category.turret,
-                        with(Items.silicon, 130, Items.thorium, 80, Items.phaseFabric, 40, Items.titanium, 40));
+        pointDefense = new PointDefenseTurret("pointdefense-segment"){{
+            requirements(Category.turret, with(Items.silicon, 130, Items.thorium, 80, Items.phaseFabric, 40, Items.titanium, 40));
+            
+            scaledHealth = 250;
+            range = 180f;
+            hasPower = true;
+            consumePower(8f);
+            size = 2;
+            shootLength = 5f;
+            bulletDamage = 30f;
+            reload = 8f;
+            envEnabled |= Env.space;
+         }};
 
-                scaledHealth = 250;
-                range = 180f;
-                hasPower = true;
-                consumePower(8f);
-                size = 2;
-                shootLength = 5f;
-                bulletDamage = 30f;
-                reload = 8f;
-                envEnabled |= Env.space;
-            }
-        };
+        laser = new LaserTurret("laser-meltdown"){{
+            requirements(Category.turret, with(Items.copper, 1200, Items.lead, 350, Items.graphite, 300, Items.surgeAlloy, 325, Items.silicon, 325));
+            
+            shootEffect = Fx.shootBigSmoke2;
+            shootCone = 40f;
+            recoil = 4f;
+            size = 4;
+            shake = 2f;
+            range = 195f;
+            reload = 90f;
+            firingMoveFract = 10f;
+            shootDuration = 230f;
+            shootSound = Sounds.laserbig;
+            loopSound = Sounds.beam;
+            loopSoundVolume = 2f;
+            envEnabled |= Env.scorching;
+            
+            shootType = new ContinuousLaserBulletType(78){{
+                length = 200f;
+                hitEffect = Fx.hitMeltdown;
+                hitColor = Pal.meltdownHit;
+                status = StatusEffects.melting;
+                drawSize = 420f;
+                incendChance = 0.4f;
+                incendSpread = 5f;
+                incendAmount = 1;
+                ammoMultiplier = 1f;
+            }};
 
-        laser = new LaserTurret("laser-meltdown") {
-            {
-                requirements(Category.turret, with(Items.copper, 1200, Items.lead, 350, Items.graphite, 300,
-                        Items.surgeAlloy, 325, Items.silicon, 325));
-                shootEffect = Fx.shootBigSmoke2;
-                shootCone = 40f;
-                recoil = 4f;
-                size = 4;
-                shake = 2f;
-                range = 195f;
-                reload = 90f;
-                firingMoveFract = 10f;
-                shootDuration = 230f;
-                shootSound = Sounds.laserbig;
-                loopSound = Sounds.beam;
-                loopSoundVolume = 2f;
-                envEnabled |= Env.scorching;
-
-                shootType = new ContinuousLaserBulletType(78) {
-                    {
-                        length = 200f;
-                        hitEffect = Fx.hitMeltdown;
-                        hitColor = Pal.meltdownHit;
-                        status = StatusEffects.melting;
-                        drawSize = 420f;
-
-                        incendChance = 0.4f;
-                        incendSpread = 5f;
-                        incendAmount = 1;
-                        ammoMultiplier = 1f;
-                    }
-                };
-
-                scaledHealth = 200;
-                coolant = consumeCoolant(0.5f);
-                consumePower(17f);
-            }
-        };
+            scaledHealth = 200;
+            coolant = consumeCoolant(0.5f);
+            consumePower(17f);
+        }};
 
         lightning = new PowerTurret("lightning-arc") {
             {
@@ -327,8 +320,7 @@ public class XBlocks {
 
         railGun = new LaserTurret("rail-gun") {
             {
-                requirements(Category.turret, with(Items.copper, 1200, Items.lead, 350, Items.graphite, 300,
-                        Items.surgeAlloy, 325, Items.silicon, 325));
+                requirements(Category.turret, with(Items.copper, 1200, Items.lead, 350, Items.graphite, 300, Items.surgeAlloy, 325, Items.silicon, 325));
                 shootEffect = Fx.shootBigSmoke2;
                 shootCone = 40f;
                 recoil = 4f;
@@ -343,21 +335,18 @@ public class XBlocks {
                 loopSoundVolume = 2f;
                 envEnabled |= Env.scorching;
 
-                shootType = new XContinuousLaserBulletType(78) {
-                    {
-                        length = 300f;
-                        hitEffect = Fx.hitMeltdown;
-                        hitColor = Pal.meltdownHit;
-                        status = StatusEffects.melting;
-                        drawSize = 420f;
-                        width = 2.5f;
-
-                        incendChance = 1f;
-                        incendSpread = 5f;
-                        incendAmount = 1;
-                        ammoMultiplier = 1f;
-                    }
-                };
+                shootType = new XContinuousLaserBulletType(78){{
+                    length = 300f;
+                    hitEffect = Fx.hitMeltdown;
+                    hitColor = Pal.meltdownHit;
+                    status = StatusEffects.melting;
+                    drawSize = 420f;
+                    width = 2.5f;
+                    incendChance = 1f;
+                    incendSpread = 5f;
+                    incendAmount = 1;
+                    ammoMultiplier = 1f;
+                }};
 
                 scaledHealth = 200;
                 consumePower(17f);
@@ -418,159 +407,147 @@ public class XBlocks {
             }
         };
 
-        base = new ItemTurret("base") {
-            {
-                requirements(Category.turret, with(Items.copper, 20, XItems.iron, 60));
-                ammo(
-                        Items.copper, new BasicBulletType(2.25f, 13) {
-                            {
-                                width = 7f;
-                                height = 9f;
-                                lifetime = 100f;
-                            }
-                        });
+        base = new ItemTurret("base"){{
+            requirements(Category.turret, with(Items.copper, 20, XItems.iron, 60));
+            
+            ammo(
+                Items.copper, new BasicBulletType(2.25f, 13){{
+                    width = 7f;
+                    height = 9f;
+                    lifetime = 100f;
+                }}
+            );
 
-                shootY = 3f;
-                reload = 12f;
-                range = 125;
-                shootCone = 15f;
-                ammoUseEffect = Fx.casing2;
-                health = 325;
-                inaccuracy = 2.5f;
-                rotateSpeed = 9f;
-                coolant = consumeCoolant(0.1f);
-                researchCostMultiplier = 0.15f;
+            shootY = 3f;
+            reload = 12f;
+            range = 125;
+            shootCone = 15f;
+            ammoUseEffect = Fx.casing2;
+            health = 325;
+            inaccuracy = 2.5f;
+            rotateSpeed = 9f;
+            coolant = consumeCoolant(0.1f);
+            researchCostMultiplier = 0.15f;
 
-                limitRange();
-            }
-        };
+            limitRange();
+        }};
 
-        baseBomb = new ItemTurret("base-bomb") {
-            {
-                requirements(Category.turret, with(Items.copper, 20, XItems.iron, 60));
-                ammo(
-                        Items.copper, new BombBulletType(35, 8.5f) {
-                            {
-                                speed = 4f;
-                                width = 20f;
-                                height = 20f;
-                                lifetime = 100f;
-                            }
-                        });
+        baseBomb = new ItemTurret("base-bomb"){{
+            requirements(Category.turret, with(Items.copper, 20, XItems.iron, 60));
+            
+            ammo(
+                Items.copper, new BombBulletType(35, 8.5f){{
+                    speed = 4f;
+                    width = 20f;
+                    height = 20f;
+                    lifetime = 100f;
+                }}
+            );
 
-                shootY = 3f;
-                reload = 360f;
-                range = 300;
-                shootCone = 15f;
-                ammoUseEffect = Fx.casing2;
-                health = 325;
-                inaccuracy = 2.5f;
-                rotateSpeed = 9f;
-                coolant = consumeCoolant(0.1f);
-                researchCostMultiplier = 0.15f;
+            shootY = 3f;
+            reload = 360f;
+            range = 300;
+            shootCone = 15f;
+            ammoUseEffect = Fx.casing2;
+            health = 325;
+            inaccuracy = 2.5f;
+            rotateSpeed = 9f;
+            coolant = consumeCoolant(0.1f);
+            researchCostMultiplier = 0.15f;
+            limitRange();
+        }};
 
-                limitRange();
-            }
-        };
+        doubleGatling = new ItemTurret("double-gatling"){{
+            requirements(Category.turret, with(Items.copper, 120, Items.titanium, 100, Items.graphite, 60, Items.silicon, 50));
+            
+            drawer = new DrawTurret("powerful-");
 
-        doubleGatling = new ItemTurret("double-gatling") {
-            {
-                requirements(Category.turret,
-                        with(Items.copper, 120, Items.titanium, 100, Items.graphite, 60, Items.silicon, 50));
+            ammo(
+                XItems.tenmm, new BasicBulletType(13f, 100f, "xmod-gauge1-bullet"){{
+                    frontColor = Color.valueOf("42fff8");
+                    backColor = Color.valueOf("42fff8");
+                    hitSize = 17.5f;
+                    width = 17.5f;
+                    height = 17.5f;
+                    lifetime = 300f;
+                    shootEffect = Fx.shootBig;
+                    ammoMultiplier = 2;
+                    trailChance = 1f;
+                    trailColor = Color.valueOf("8cfffb");
+                    trailParam = 5;
+                    trailLength = 2;
+                    trailWidth = 3.5f;
+                    trailEffect = Fx.none;
+                    hitEffect = despawnEffect = new MultiEffect(
+                        Fx.hitBulletBig,
+                        new WaveEffect(){{
+                            sizeFrom = 0f;
+                            sizeTo = 9f;
+                            strokeFrom = 5f;
+                            strokeTo = 0f;
+                            lifetime = 7.5f;
+                            colorFrom = Color.white;
+                            colorTo = Pal.lightOrange;
+                        }}
+                    );
+                }},
+                XItems.tenmmE, new BasicBulletType(13f, 65f, "xmod-gauge1-bullet"){{
+                    frontColor = Color.valueOf("42fff8");
+                    backColor = Color.valueOf("42fff8");
+                    hitSize = 17.5f;
+                    width = 17.5f;
+                    height = 17.5f;
+                    lifetime = 300f;
+                    shootEffect = Fx.shootBig;
+                    ammoMultiplier = 2;
+                    trailChance = 1f;
+                    trailColor = Color.valueOf("8cfffb");
+                    trailParam = 5;
+                    trailLength = 2;
+                    trailWidth = 3.5f;
+                    trailEffect = Fx.none;
+                    splashDamage = 155f;
+                    splashDamageRadius = 25f;
+                    hitEffect = despawnEffect = new MultiEffect(
+                        Fx.hitBulletBig,
+                        new WaveEffect(){{
+                            sizeFrom = 0f;
+                            sizeTo = 25f;
+                            strokeFrom = 8.5f;
+                            strokeTo = 0f;
+                            lifetime = 15f;
+                            colorFrom = Color.valueOf("A9D8FFFF");
+                            colorTo = Color.valueOf("66B1FFFF");
+                        }}
+                    );
+                }}
+            );
 
-                drawer = new DrawTurret("powerful-");
-                ammo(
-                        XItems.tenmm, new BasicBulletType(13f, 100f, "xmod-gauge1-bullet") {
-                            {
-                                frontColor = Color.valueOf("42fff8");
-                                backColor = Color.valueOf("42fff8");
-                                hitSize = 17.5f;
-                                width = 17.5f;
-                                height = 17.5f;
-                                lifetime = 300f;
-                                shootEffect = Fx.shootBig;
-                                ammoMultiplier = 2;
-                                trailChance = 1f;
-                                trailColor = Color.valueOf("8cfffb");
-                                trailParam = 5;
-                                trailLength = 2;
-                                trailWidth = 3.5f;
-                                trailEffect = Fx.none;
-                                hitEffect = despawnEffect = new MultiEffect(
-                                        Fx.hitBulletBig,
-                                        new WaveEffect() {
-                                            {
-                                                sizeFrom = 0f;
-                                                sizeTo = 9f;
-                                                strokeFrom = 5f;
-                                                strokeTo = 0f;
-                                                lifetime = 7.5f;
-                                                colorFrom = Color.white;
-                                                colorTo = Pal.lightOrange;
-                                            }
-                                        });
-                            }
-                        },
-                        XItems.tenmmE, new BasicBulletType(13f, 65f, "xmod-gauge1-bullet") {
-                            {
-                                frontColor = Color.valueOf("42fff8");
-                                backColor = Color.valueOf("42fff8");
-                                hitSize = 17.5f;
-                                width = 17.5f;
-                                height = 17.5f;
-                                lifetime = 300f;
-                                shootEffect = Fx.shootBig;
-                                ammoMultiplier = 2;
-                                trailChance = 1f;
-                                trailColor = Color.valueOf("8cfffb");
-                                trailParam = 5;
-                                trailLength = 2;
-                                trailWidth = 3.5f;
-                                trailEffect = Fx.none;
-                                splashDamage = 155f;
-                                splashDamageRadius = 25f;
-                                hitEffect = despawnEffect = new MultiEffect(
-                                        Fx.hitBulletBig,
-                                        new WaveEffect() {
-                                            {
-                                                sizeFrom = 0f;
-                                                sizeTo = 25f;
-                                                strokeFrom = 8.5f;
-                                                strokeTo = 0f;
-                                                lifetime = 15f;
-                                                colorFrom = Color.valueOf("A9D8FFFF");
-                                                colorTo = Color.valueOf("66B1FFFF");
-                                            }
-                                        });
-                            }
-                        });
-                reload = 5.5f;
-                recoil = 13f;
-                recoilTime = 145f;
-                maxAmmo = 40;
-                buildCostMultiplier = 0.35f;
-                health = 2150;
-                rotateSpeed = 4.25f;
-                shootY = 5f;
-                coolantMultiplier = 0.5f;
-                range = 300f;
-                inaccuracy = 5.5f;
-                heatColor = Pal.turretHeat;
-                shoot = new ShootAlternate() {
-                    {
-                        spread = 21;
-                        shots = 2;
-                    }
-                };
-                shake = 3f;
-                size = 5;
-                shootCone = 24f;
-                shootSound = Sounds.shootBig;
-                coolant = consumeLiquid(XLiquids.coolantLiquid, 1f);
+            reload = 5.5f;
+            recoil = 13f;
+            recoilTime = 145f;
+            maxAmmo = 40;
+            buildCostMultiplier = 0.35f;
+            health = 2150;
+            rotateSpeed = 4.25f;
+            shootY = 5f;
+            coolantMultiplier = 0.5f;
+            range = 300f;
+            inaccuracy = 5.5f;
+            heatColor = Pal.turretHeat;
 
-                limitRange();
-            }
-        };
+            shoot = new ShootAlternate(){{
+                spread = 17;
+                shots = 2;
+            }};
+
+            shake = 3f;
+            size = 5;
+            shootCone = 24f;
+            shootSound = Sounds.shootBig;
+            coolant = consumeLiquid(XLiquids.coolantLiquid, 1f);
+            limitRange();
+        }};
 
         rocketCrafter = new GenericCrafter("rocket-crafter") {
             {
@@ -992,19 +969,112 @@ public class XBlocks {
         // filter = Seq.with(XBlocks.missile, XBlocks.hugeMissile);
         // }};
 
-        xCore = new CoreBlock("xcore"){{
-            requirements(Category.effect, BuildVisibility.editorOnly, with(Items.copper, 1000, Items.lead, 800));
+        xCore = new CoreBlock("core-x"){{
+            requirements(Category.effect, BuildVisibility.shown, with(Items.copper, 2000, Items.lead, 800));
+            isFirstTier = true;
             alwaysUnlocked = true;
 
-            isFirstTier = true;
-            unitType = UnitTypes.beta;
+            unitType = XUnits.xalpha;
             health = 1100;
             itemCapacity = 4000;
-            size = 3;
+            size = 5;
 
             unitCapModifier = 8;
         }};
 
+        poisonTurret = new LiquidTurret("poison-turret"){{
+            requirements(Category.turret, with(Items.copper, 20, XItems.iron, 60));
+            
+            ammo(
+                XLiquids.poison, new LiquidBulletType(XLiquids.poison){{
+                    speed = 1.25f;
+                    orbSize = 6.75f;
+                    // puddleSize = 100f;
+                    status = XStatusEffects.eroded;
+                    statusDuration = 60 * 5;
 
+                    shootEffect = Fx.steam;
+                    hitEffect = new MultiEffect(
+                        XFx.gasEffect
+                    );
+                }},
+                XLiquids.poisonGas, new LiquidBulletType(XLiquids.poisonGas){{
+                    lifetime = 60f;
+                    speed = 0.5f;
+                    orbSize = 8.5f;
+                }}
+            );
+
+            size = 2;
+            health = 1300;
+            rotateSpeed = 10f;
+
+            range = 110;
+            reload = 1.5f;
+            inaccuracy = 8.5f;
+            targetGround = true;
+            targetAir = true;
+
+            coolant = consumeCoolant(0.1f);
+            researchCostMultiplier = 0.15f;
+        }};
+        
+        fAntonin = new PowerTurret("f-antonin"){{
+            requirements(Category.turret, with(Items.copper, 20, XItems.iron, 60));
+
+            shootType = new BasicBulletType(){{
+                speed = 0.5f;
+                lifetime = 300f;
+                // spin = 2;
+                // trailChance = 1;
+                // trailRotation = true;
+                homingPower = 0.07f;
+                homingRange = 8f * tilesize;
+            }};
+
+            shoot = new XPattern(){{
+                shots = 1;
+                scl = 4f;
+                mag = 0.5f;
+            }};
+
+            shootY = 3f;
+            reload = 12f;
+            range = 1000;
+            shootCone = 15f;
+            ammoUseEffect = Fx.casing2;
+            health = 325;
+            // inaccuracy = 2.5f;
+            rotateSpeed = 9f;
+            coolant = consumeCoolant(0.1f);
+            researchCostMultiplier = 0.15f;
+        }};
+
+
+        //Exploitable content
+
+        // letsGo = new ShockwaveTower("letsGo"){{
+        //     requirements(Category.effect, with(Items.surgeAlloy, 50, Items.silicon));
+        //     size = 3;
+        //     consumeLiquids(LiquidStack.with(Liquids.cyanogen, 1.5f / 60f));
+        //     consumePower(100f / 60f);
+        //     range = 170f;
+        //     reload = 80f;
+        // }};
+
+        // atmosphericConcentrator = new HeatCrafter("atmospheric-concentrator"){{
+        //     requirements(Category.crafting, with(Items.oxide, 60, Items.beryllium, 180, Items.silicon, 150));
+        //     size = 3;
+        //     hasLiquids = true;
+
+        //     drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(Liquids.nitrogen, 4.1f), new DrawDefault(), new DrawHeatInput(),
+        //     new DrawParticles(){{
+        //         color = Color.valueOf("d4f0ff");
+        //         alpha = 0.6f;
+        //         particleSize = 4f;
+        //         particles = 10;
+        //         particleRad = 12f;
+        //         particleLife = 140f;
+        //     }});
     }
 }

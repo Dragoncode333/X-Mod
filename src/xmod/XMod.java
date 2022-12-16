@@ -61,6 +61,7 @@ public class XMod extends Mod {
         XItems.load();
         XUnits.load();
         XBlocks.load();
+        XSchematics.load();
         XPlanets.load();
         SerpuloTechTree.load();
         AbolTechTree.load();

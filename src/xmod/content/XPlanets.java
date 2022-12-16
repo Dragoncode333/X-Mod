@@ -19,12 +19,13 @@ import mindustry.world.*;
 import mindustry.world.meta.*;
 import xmod.content.*;
 import xmod.graphics.*;
-import xmod.maps.planet.XPlanet4546BGenerator;
+import xmod.maps.planet.*;
 import xmod.stolen.solarSystem.*;
 import xmod.stolen.solarSystem.Planet.*;
 
 import static mindustry.content.Planets.*;
 import static xmod.content.XItems.*;
+import static xmod.content.XBlocks.*;
 
 public class XPlanets {
     public static Planet planet4546B, s4546, sMoon, sSMoon,
@@ -35,7 +36,7 @@ public class XPlanets {
     public static void load() {
 
         // Subnautica System
-        s4546 = new Planet("s4546", null, 7f) {
+        s4546 = new Planet("s4546", null, 7f, 2) {
             {
                 bloom = true;
                 accessible = false;
@@ -62,11 +63,11 @@ public class XPlanets {
                 new HexSkyMesh(this, 1, 0.6f, 0.15f, 5, Color.white, 2, 0.45f, 1f, 0.41f)
             );
             atmosphereColor = Color.valueOf("3db899");
-            atmosphereRadIn = 0f;
-            atmosphereRadOut = 0.175f;
+            atmosphereRadIn = -0.01f;
+            atmosphereRadOut = 0.3f;
             landCloudColor = Pal.spore.cpy().a(0.5f);
             iconColor = Color.valueOf("597be3");
-            defaultCore = XBlocks.xCore;
+            defaultCore = xCore;
             defaultEnv = Env.underwater | Env.terrestrial;
             alwaysUnlocked = true;
             orbitRadius = 40f;
@@ -227,6 +228,7 @@ public class XPlanets {
                 startSector = 15;
                 alwaysUnlocked = true;
                 landCloudColor = Pal.spore.cpy().a(0.5f);
+                unlockedOnLand.add(XBlocks.xCore);
                 hiddenItems.addAll(Items.erekirItems).removeAll(Items.serpuloItems);
             }
         };
@@ -349,7 +351,6 @@ public class XPlanets {
                 accessible = true;
                 alwaysUnlocked = true;
                 tidalLock = true;
-                defaultCore = Blocks.coreShard;
                 hasAtmosphere = true;
                 bloom = false;
                 camRadius = 0.275f;
