@@ -987,8 +987,8 @@ public class XBlocks {
             
             ammo(
                 XLiquids.poison, new LiquidBulletType(XLiquids.poison){{
-                    speed = 3;
-                    orbSize = 7.5f;
+                    speed = 1.25f;
+                    orbSize = 6.75f;
                     // puddleSize = 100f;
                     status = XStatusEffects.eroded;
                     statusDuration = 60 * 5;
@@ -1023,7 +1023,7 @@ public class XBlocks {
             requirements(Category.turret, with(Items.copper, 20, XItems.iron, 60));
 
             shootType = new BasicBulletType(){{
-                speed = 1f;
+                speed = 0.5f;
                 lifetime = 300f;
                 // spin = 2;
                 // trailChance = 1;
